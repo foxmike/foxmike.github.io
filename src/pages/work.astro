@@ -1,0 +1,69 @@
+---
+import '../styles/global.css';
+
+const work = [
+  {
+    title: 'Forecasting and decision-support platforms',
+    text: 'Building systems that move from raw operational data through normalized analytical layers, model execution, evaluation, APIs, and dashboards for decision-oriented domains such as demand planning, inventory health, pricing, and energy markets.',
+  },
+  {
+    title: 'AI-assisted development orchestration',
+    text: 'Designing autonomous software development systems that route work across AI coding backends, preserve scope through structured task contracts, verify changes deterministically, and handle failure through explicit retry and escalation paths.',
+  },
+  {
+    title: 'Data platform modernization',
+    text: 'Converting fragmented or legacy data workflows into scalable, maintainable platforms using cloud-native services, columnar data formats, reproducible pipelines, and production serving layers.',
+  },
+  {
+    title: 'RAG and document intelligence systems',
+    text: 'Developing retrieval-augmented systems that combine LLMs, embeddings, vector stores, and structured search to support code generation, research agents, operational assistants, and document-heavy business workflows.',
+  },
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Work | Mike Fox</title>
+    <meta name="description" content="Current work themes for Mike Fox: forecasting systems, AI development orchestration, data platforms, and RAG applications." />
+  </head>
+  <body>
+    <div class="site">
+      <nav class="nav">
+        <a class="brand" href="/">Mike Fox</a>
+        <div class="nav-links">
+          <a href="/capabilities/">Capabilities</a>
+          <a href="/work/">Work</a>
+          <a href="/articles/">Articles</a>
+          <a href="/about/">About</a>
+          <a href="https://github.com/foxmike">GitHub</a>
+        </div>
+      </nav>
+
+      <main class="main">
+        <section class="page-title">
+          <p class="eyebrow">Current work</p>
+          <h1>Things I am building and thinking through.</h1>
+          <p>
+            This page is intentionally organized around capability and current direction rather than job history.
+          </p>
+        </section>
+
+        <section class="grid two">
+          {work.map((item) => (
+            <article class="card">
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </article>
+          ))}
+        </section>
+      </main>
+
+      <footer class="footer">
+        <span>© Mike Fox</span>
+        <span><a href="mailto:foxmike@gmail.com">foxmike@gmail.com</a></span>
+      </footer>
+    </div>
+  </body>
+</html>

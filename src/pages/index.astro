@@ -1,0 +1,146 @@
+---
+import '../styles/global.css';
+
+const year = new Date().getFullYear();
+
+const capabilities = [
+  {
+    title: 'Forecasting and Decision Platforms',
+    text: 'Time-series forecasting, analytics, and decision-support systems built on high-performance data foundations with modeling, APIs, dashboards, and production serving layers.',
+  },
+  {
+    title: 'AI Development Orchestration',
+    text: 'Supervisor-driven systems that coordinate planning, execution, review, verification, retry, and structured failure handling across multiple AI coding backends.',
+  },
+  {
+    title: 'Data Platforms and Lakehouse Architecture',
+    text: 'Extraction, ingestion, normalization, transformation, analytics pipelines, Iceberg/Parquet data layers, warehouses, and production-grade serving architecture.',
+  },
+];
+
+const focusAreas = [
+  'Forecasting and analytics platforms',
+  'Autonomous development orchestration systems',
+  'Multi-backend AI and agentic workflow systems',
+  'RAG and document intelligence systems',
+  'Operational dashboards and decision-support tools',
+  'Legacy platform modernization',
+  'Custom backend and API platforms',
+  'Production ML and model-serving systems',
+  'Supply chain, healthcare, energy, and manufacturing analytics',
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Mike Fox | Software Architecture, Data Platforms, AI-Enabled Systems</title>
+    <meta name="description" content="Mike Fox — senior software architect focused on data platforms, forecasting systems, AI-enabled applications, autonomous development orchestration, and production software architecture." />
+  </head>
+  <body>
+    <div class="site">
+      <nav class="nav">
+        <a class="brand" href="/">Mike Fox</a>
+        <div class="nav-links">
+          <a href="/capabilities/">Capabilities</a>
+          <a href="/work/">Work</a>
+          <a href="/articles/">Articles</a>
+          <a href="/about/">About</a>
+          <a href="https://github.com/foxmike">GitHub</a>
+        </div>
+      </nav>
+
+      <main class="main">
+        <section class="hero">
+          <p class="eyebrow">Senior Architect · Data Platforms · AI-Enabled Systems</p>
+          <h1>Production software architecture for data-intensive and AI-era systems.</h1>
+          <p class="lead">
+            I design and deliver systems where architecture, data, modeling, APIs, automation, and operational decision-making have to work together in production — not just in demos.
+          </p>
+          <div class="actions">
+            <a class="button primary" href="/capabilities/">View capabilities</a>
+            <a class="button" href="/work/">Current work</a>
+            <a class="button" href="mailto:foxmike@gmail.com">Contact</a>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-header">
+            <h2>What I build</h2>
+            <p>
+              Systems that connect raw operational data, analytics pipelines, models, and user-facing applications into durable production architectures.
+            </p>
+          </div>
+
+          <div class="grid three">
+            {capabilities.map((item) => (
+              <article class="card">
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section class="section split">
+          <div>
+            <p class="eyebrow">Operating focus</p>
+            <h2>Architecture with execution discipline.</h2>
+          </div>
+          <div class="callout">
+            <p>
+              The work is not only choosing tools. It is decomposing complex business problems into systems that can be built, tested, operated, extended, and trusted — with minimal technical debt and clear boundaries between data, models, services, and users.
+            </p>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-header">
+            <h2>Core capability areas</h2>
+            <p>
+              A practical mix of data architecture, backend engineering, AI-enabled workflows, forecasting systems, modernization, and production delivery.
+            </p>
+          </div>
+
+          <div class="pill-list">
+            {focusAreas.map((area) => <span class="pill">{area}</span>)}
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-header">
+            <h2>Current themes</h2>
+            <p>
+              Independent work and advisory focus are centered on forecasting and decision-support systems, autonomous software development orchestration, multi-model AI systems, and practical AI adoption for production software organizations.
+            </p>
+          </div>
+
+          <div class="grid two">
+            <article class="card">
+              <h3>Forecasting and decision systems</h3>
+              <p>
+                Platforms for demand planning, market modeling, inventory health, pricing, operational analytics, and energy-market analysis using reproducible data pipelines, model evaluation, and decision-oriented dashboards.
+              </p>
+            </article>
+
+            <article class="card">
+              <h3>Autonomous development orchestration</h3>
+              <p>
+                Systems that coordinate AI coding backends through structured task contracts, deterministic verification, reviewer/verifier loops, sandboxed execution, git automation, and tiered retry strategies.
+              </p>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <span>© {year} Mike Fox</span>
+        <span>
+          <a href="mailto:foxmike@gmail.com">foxmike@gmail.com</a> ·
+          <a href="https://github.com/foxmike">github.com/foxmike</a>
+        </span>
+      </footer>
+    </div>
+  </body>
+</html>

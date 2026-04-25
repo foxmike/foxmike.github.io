@@ -1,0 +1,58 @@
+---
+import '../styles/global.css';
+
+const planned = [
+  'Task contracts as the unit of work in AI-assisted development',
+  'Multi-backend routing as insurance against model risk',
+  'Verification-first development with AI coding agents',
+  'Agentic orchestration without losing architectural control',
+  'Data platforms as the foundation for useful forecasting systems',
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Articles | Mike Fox</title>
+    <meta name="description" content="Articles and notes by Mike Fox on AI-assisted development, architecture, model routing, task contracts, data platforms, and production systems." />
+  </head>
+  <body>
+    <div class="site">
+      <nav class="nav">
+        <a class="brand" href="/">Mike Fox</a>
+        <div class="nav-links">
+          <a href="/capabilities/">Capabilities</a>
+          <a href="/work/">Work</a>
+          <a href="/articles/">Articles</a>
+          <a href="/about/">About</a>
+          <a href="https://github.com/foxmike">GitHub</a>
+        </div>
+      </nav>
+
+      <main class="main">
+        <section class="page-title">
+          <p class="eyebrow">Articles</p>
+          <h1>Notes on dependable AI-assisted development and production architecture.</h1>
+          <p>
+            This section will hold writing on the systems, patterns, and engineering discipline required to make AI-assisted development and data-intensive platforms dependable.
+          </p>
+        </section>
+
+        <section class="stack">
+          {planned.map((title) => (
+            <article class="card">
+              <h3>{title}</h3>
+              <p>Draft planned. This will become a full article as the writing is finalized.</p>
+            </article>
+          ))}
+        </section>
+      </main>
+
+      <footer class="footer">
+        <span>© Mike Fox</span>
+        <span><a href="mailto:foxmike@gmail.com">foxmike@gmail.com</a></span>
+      </footer>
+    </div>
+  </body>
+</html>
