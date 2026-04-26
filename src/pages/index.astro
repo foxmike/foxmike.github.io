@@ -1,7 +1,5 @@
 ---
-import '../styles/global.css';
-
-const year = new Date().getFullYear();
+import BaseLayout from '../layouts/BaseLayout.astro';
 
 const capabilities = [
   {
@@ -31,27 +29,10 @@ const focusAreas = [
 ];
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Mike Fox | Software Architecture, Data Platforms, AI-Enabled Systems</title>
-    <meta name="description" content="Mike Fox — senior software architect focused on data platforms, forecasting systems, AI-enabled applications, autonomous development orchestration, and production software architecture." />
-  </head>
-  <body>
-    <div class="site">
-      <nav class="nav">
-        <a class="brand" href="/">Mike Fox</a>
-        <div class="nav-links">
-          <a href="/capabilities/">Capabilities</a>
-          <a href="/work/">Work</a>
-          <a href="/articles/">Articles</a>
-          <a href="/about/">About</a>
-          <a href="https://github.com/foxmike">GitHub</a>
-        </div>
-      </nav>
-
-      <main class="main">
+<BaseLayout
+  title="Mike Fox | Software Architecture, Data Platforms, AI-Enabled Systems"
+  description="Mike Fox - senior software architect focused on data platforms, forecasting systems, AI-enabled applications, autonomous development orchestration, and production software architecture."
+>
         <section class="hero">
           <p class="eyebrow">Senior Architect · Data Platforms · AI-Enabled Systems</p>
           <h1>Production software architecture for data-intensive and AI-era systems.</h1>
@@ -132,15 +113,4 @@ const focusAreas = [
             </article>
           </div>
         </section>
-      </main>
-
-      <footer class="footer">
-        <span>© {year} Mike Fox</span>
-        <span>
-          <a href="mailto:foxmike@gmail.com">foxmike@gmail.com</a> ·
-          <a href="https://github.com/foxmike">github.com/foxmike</a>
-        </span>
-      </footer>
-    </div>
-  </body>
-</html>
+</BaseLayout>

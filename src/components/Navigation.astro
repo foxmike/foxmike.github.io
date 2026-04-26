@@ -1,0 +1,30 @@
+---
+const currentPath = Astro.url.pathname;
+
+const links = [
+  { href: '/capabilities/', label: 'Capabilities' },
+  { href: '/work/', label: 'Work' },
+  { href: '/articles/', label: 'Articles' },
+  { href: '/about/', label: 'About' },
+];
+
+const isActive = (href: string) => {
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+};
+---
+
+<nav class="nav" aria-label="Primary navigation">
+  <div class="nav-container">
+    <a class="brand" href="/">Mike Fox</a>
+
+    <div class="nav-links">
+      {links.map((link) => (
+        <a class:list={['nav-link', { active: isActive(link.href) }]} href={link.href}>
+          {link.label}
+        </a>
+      ))}
+      <a class="nav-link external" href="https://github.com/foxmike">GitHub</a>
+    </div>
+  </div>
+</nav>

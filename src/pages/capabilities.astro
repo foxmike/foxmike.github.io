@@ -1,12 +1,12 @@
 ---
-import '../styles/global.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
 
 const groups = [
   {
     title: 'Data Platforms and Architecture',
     items: [
       'End-to-end extraction, ingestion, normalization, transformation, and analytics pipelines',
-      'Iceberg, Parquet, Redshift, PostgreSQL, MongoDB, SQL Server, and performance-oriented stodocument intelligencee patterns',
+      'Iceberg, Parquet, Redshift, PostgreSQL, MongoDB, SQL Server, and performance-oriented storage patterns',
       'Lakehouse-style architecture, schema strategy, partitioning, query performance, validation, and reproducibility',
       'Distributed processing patterns using Spark-class systems, queues, containers, and event-driven processing',
     ],
@@ -59,27 +59,10 @@ const groups = [
 ];
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Capabilities | Mike Fox</title>
-    <meta name="description" content="Technical capabilities for Mike Fox: data platforms, forecasting systems, AI-enabled applications, autonomous development orchestration, and modernization." />
-  </head>
-  <body>
-    <div class="site">
-      <nav class="nav">
-        <a class="brand" href="/">Mike Fox</a>
-        <div class="nav-links">
-          <a href="/capabilities/">Capabilities</a>
-          <a href="/work/">Work</a>
-          <a href="/articles/">Articles</a>
-          <a href="/about/">About</a>
-          <a href="https://github.com/foxmike">GitHub</a>
-        </div>
-      </nav>
-
-      <main class="main">
+<BaseLayout
+  title="Capabilities | Mike Fox"
+  description="Technical capabilities for Mike Fox: data platforms, forecasting systems, AI-enabled applications, autonomous development orchestration, and modernization."
+>
         <section class="page-title">
           <p class="eyebrow">Capabilities</p>
           <h1>Architecture, data, AI, and production execution.</h1>
@@ -95,12 +78,4 @@ const groups = [
             </article>
           ))}
         </section>
-      </main>
-
-      <footer class="footer">
-        <span>© Mike Fox</span>
-        <span><a href="mailto:foxmike@gmail.com">foxmike@gmail.com</a></span>
-      </footer>
-    </div>
-  </body>
-</html>
+</BaseLayout>
