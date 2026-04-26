@@ -1,13 +1,10 @@
 ---
-import '../styles/global.css';
+import { getCollection } from 'astro:content';
+import '../../styles/global.css';
 
-const planned = [
-  'Task contracts as the unit of work in AI-assisted development',
-  'Multi-backend routing as insurance against model risk',
-  'Verification-first development with AI coding agents',
-  'Agentic orchestration without losing architectural control',
-  'Data platforms as the foundation for useful forecasting systems',
-];
+const articles = (await getCollection('articles')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
 ---
 
 <html lang="en">
@@ -15,7 +12,7 @@ const planned = [
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>Articles | Mike Fox</title>
-    <meta name="description" content="Articles and notes by Mike Fox on AI-assisted development, architecture, model routing, task contracts, data platforms, and production systems." />
+    <meta name="description" content="Articles and notes by Mike Fox on dependable AI-assisted development, architecture, model routing, task contracts, and production systems." />
   </head>
   <body>
     <div class="site">
@@ -33,14 +30,16 @@ const planned = [
       <main class="main">
         <section class="page-title">
           <p class="eyebrow">Articles</p>
-          <h1>Notes on dependable AI-assisted development and production architecture.</h1>
+          <h1>Articles</h1>
+          <p>Notes on dependable AI-assisted development and production architecture.</p>
         </section>
 
         <section class="stack">
-          {planned.map((title) => (
-            <article class="card">
-              <h3>{title}</h3>
-              <p>Coming soon.</p>
+          {articles.map((article) => (
+            <article class="card article-card">
+              <h3>{article.data.title}</h3>
+              <p>{article.data.description}</p>
+              <a href={`/articles/${article.data.slug}/`}>Read article</a>
             </article>
           ))}
         </section>
