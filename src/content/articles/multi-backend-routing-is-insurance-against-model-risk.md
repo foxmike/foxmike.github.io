@@ -61,25 +61,19 @@ The orchestrator stays still. It knows how to plan, route, execute, review, veri
 
 In a working supervisor system, the registry can be small and explicit:
 
+```python
 class BackendRegistry:
+    def __init__(self):
+        self._backends = {
+            "codex_cli": lambda root: CodexCliBackend(root),
+            "claude_code_cli": lambda root: ClaudeCodeCliBackend(root),
+            "gemini_cli": lambda root: GeminiCliBackend(root),
+            "aider_cli": lambda root: AiderCliBackend(root),
+        }
 
-def \_\_init\_\_(self):
-
-self.\_backends = {
-
-"codex_cli": lambda root: CodexCliBackend(root),
-
-"claude_code_cli": lambda root: ClaudeCodeCliBackend(root),
-
-"gemini_cli": lambda root: GeminiCliBackend(root),
-
-"aider_cli": lambda root: AiderCliBackend(root),
-
-}
-
-def get(self, name, working_root):
-
-return self.\_backends\[name\](working_root)
+    def get(self, name, working_root):
+        return self._backends[name](working_root)
+```
 
 The backends are not equivalent. They differ in capability, cost, latency, context handling, and operational quirks. The registry does not pretend otherwise. It creates a seam where those differences can be handled by adapters rather than leaked into the orchestrator.
 
@@ -99,23 +93,20 @@ A reasonable escalation order starts with local inference when it is available. 
 
 The policy can be simple:
 
+```python
 def execute_with_escalation(task):
+    for backend_name in task.escalation_chain: # e.g. ["local_qwen", "claude_code_cli", "codex_cli"]
+        backend = registry.get(backend_name, working_root)
+        result = supervisor.run(task, backend=backend)
 
-for backend_name in task.escalation_chain: \# e.g. \["local_qwen", "claude_code_cli", "codex_cli"\]
+        if result.accepted:
+            return result
 
-backend = registry.get(backend_name, working_root)
+        if not result.escalation_warranted: # contract failure, not capability shortfall
+            return result
 
-result = supervisor.run(task, backend=backend)
-
-if result.accepted:
-
-return result
-
-if not result.escalation_warranted: \# contract failure, not capability shortfall
-
-return result
-
-return result
+    return result
+```
 
 The load-bearing distinction is between capability shortfall and contract failure.
 

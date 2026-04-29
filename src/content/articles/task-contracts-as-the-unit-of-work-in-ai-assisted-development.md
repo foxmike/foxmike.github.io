@@ -66,33 +66,22 @@ The agent still interprets, but now it interprets inside a bounded contract rath
 
 A real contract from a working supervisor system looks like this:
 
+```json
 {
-
-"task_id": "1.3",
-
-"title": "Add item detail retrieval",
-
-"description": "Implement item-detail retrieval for selected listing IDs from the candidate set so downstream phases can normalize richer listing payloads.",
-
-"phase": "phase_1",
-
-"acceptance_criteria": \[
-
-"Item-detail retrieval accepts one or more item IDs from search output.",
-
-"Detail responses are mapped into a stable raw artifact structure with source metadata.",
-
-"Missing or invalid listing IDs are handled without crashing the acquisition run."
-
-\],
-
-"selected_backend": "codex_cli",
-
-"verification_profile": "default",
-
-"model": "codex"
-
+  "task_id": "1.3",
+  "title": "Add item detail retrieval",
+  "description": "Implement item-detail retrieval for selected listing IDs from the candidate set so downstream phases can normalize richer listing payloads.",
+  "phase": "phase_1",
+  "acceptance_criteria": [
+    "Item-detail retrieval accepts one or more item IDs from search output.",
+    "Detail responses are mapped into a stable raw artifact structure with source metadata.",
+    "Missing or invalid listing IDs are handled without crashing the acquisition run."
+  ],
+  "selected_backend": "codex_cli",
+  "verification_profile": "default",
+  "model": "codex"
 }
+```
 
 Each field does specific work. Two carry most of the weight.
 
@@ -114,21 +103,17 @@ Planning produces contracts, not prompts. Execution satisfies a contract. Routin
 
 The operational pattern is small:
 
+```python
 for task in task_contracts:
+    result = supervisor.run(task) # planning, execution, review, verification
 
-result = supervisor.run(task) \# planning, execution, review, verification
-
-if result.accepted:
-
-commit(result)
-
-record(task, result)
-
-else:
-
-record(task, result) \# including the reasons for rejection
-
-continue \# or escalate, depending on policy
+    if result.accepted:
+        commit(result)
+        record(task, result)
+    else:
+        record(task, result) # including the reasons for rejection
+        continue # or escalate, depending on policy
+```
 
 The shape of the loop is the shape of the argument.
 

@@ -67,27 +67,20 @@ Separation also creates the surfaces a dependable system needs. Policy lives som
 
 In code, the supervisor assembles stages with explicit outputs and handoffs, and attaches state outside any stage:
 
+```python
 graph = StageGraph()
-
 graph.add_stage("planning", produces="intent")
-
 graph.add_stage("execution", produces="diff")
-
 graph.add_stage("review", produces="judgment")
-
 graph.add_stage("verification", produces="evidence")
+graph.connect("planning" -> "execution")
+graph.connect("execution" -> "review")
+graph.connect("review" -> "verification")
+graph.connect("verification" -> "commit_or_reject")
 
-graph.connect("planning" -\> "execution")
-
-graph.connect("execution" -\> "review")
-
-graph.connect("review" -\> "verification")
-
-graph.connect("verification" -\> "commit_or_reject")
-
-\# State lives outside the stages, not inside the conversation.
-
+# State lives outside the stages, not inside the conversation.
 graph.attach_state_store(DurableCheckpointStore(path="state/checkpoints"))
+```
 
 Four named stages, four distinct outputs, four explicit handoffs, and a state store attached to the graph rather than carried inside any stage.
 
@@ -107,25 +100,19 @@ The verifier is a stage. It runs after execution. It produces evidence. Its judg
 
 The mechanism is small. After each stage runs, the supervisor records the result in storage that survives a process restart, and on resume the next session reads state instead of reconstructing it:
 
+```python
 def on_stage_complete(stage, result, run_id):
-
-state = state_store.read(run_id)
-
-state.last_stage = stage.name
-
-state.last_output = result.output \# intent \| diff \| judgment \| evidence
-
-state.last_status = result.status \# passed \| failed \| rejected
-
-state.history.append(result) \# including rejected attempts and reasons
-
-state_store.write(run_id, state)
+    state = state_store.read(run_id)
+    state.last_stage = stage.name
+    state.last_output = result.output # intent | diff | judgment | evidence
+    state.last_status = result.status # passed | failed | rejected
+    state.history.append(result) # including rejected attempts and reasons
+    state_store.write(run_id, state)
 
 def resume(run_id):
-
-state = state_store.read(run_id)
-
-return graph.continue_from(state.last_stage, state)
+    state = state_store.read(run_id)
+    return graph.continue_from(state.last_stage, state)
+```
 
 Every stage outcome — including rejections and the reasons for them — is durable. Resumption is a read, not a reconstruction.
 

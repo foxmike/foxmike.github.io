@@ -39,55 +39,38 @@ That changes the work in several ways.
 
 Task resumption becomes possible. A task blocked yesterday can resume today with full context: the original contract, prior attempts, failure classifications, convergence assessment, and verification results. The operator does not need to re-explain the task. The system knows where it stopped and why:
 
+```json
 {
-
-"task_id": "1.5",
-
-"status": "blocked",
-
-"run_id": "4526b1d7",
-
-"attempt_count": 5,
-
-"classification": {
-
-"failure_type": "test",
-
-"failure_detail": "test_retry_escalation: AssertionError",
-
-"suggested_focus": "Address the failing pytest test or assertion."
-
-},
-
-"attempts": \["...5 detailed attempt records..."\]
-
+  "task_id": "1.5",
+  "status": "blocked",
+  "run_id": "4526b1d7",
+  "attempt_count": 5,
+  "classification": {
+    "failure_type": "test",
+    "failure_detail": "test_retry_escalation: AssertionError",
+    "suggested_focus": "Address the failing pytest test or assertion."
+  },
+  "attempts": ["...5 detailed attempt records..."]
 }
+```
 
 That blocked-task report is a resumption artifact. When the operator returns — perhaps after clarifying the specification or resolving a dependency — the system can continue from the point of stoppage instead of starting over.
 
 Clean reporting becomes possible. Runtime state is a structured record that anyone can inspect without reading a transcript:
 
+```json
 {
-
-"project_name": "abracapocus_2",
-
-"active_phase": "implementation",
-
-"tasks": \[
-
-{"task_id": "3.1", "status": "completed", "backend": "codex_cli"},
-
-{"task_id": "3.2", "status": "completed", "backend": "codex_cli"},
-
-{"task_id": "3.3", "status": "in_progress", "backend": "claude_code_cli"}
-
-\],
-
-"completed_phases": \["phase_0", "phase_2"\],
-
-"remaining_phases": \["phase_3", "phase_4", "phase_5"\]
-
+  "project_name": "abracapocus_2",
+  "active_phase": "implementation",
+  "tasks": [
+    {"task_id": "3.1", "status": "completed", "backend": "codex_cli"},
+    {"task_id": "3.2", "status": "completed", "backend": "codex_cli"},
+    {"task_id": "3.3", "status": "in_progress", "backend": "claude_code_cli"}
+  ],
+  "completed_phases": ["phase_0", "phase_2"],
+  "remaining_phases": ["phase_3", "phase_4", "phase_5"]
 }
+```
 
 A colleague who asks “where does the project stand?” gets a structured answer, not a narration from memory.
 
