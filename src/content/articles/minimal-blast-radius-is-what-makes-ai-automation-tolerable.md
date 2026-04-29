@@ -35,39 +35,33 @@ In AI-assisted development, blast radius has several dimensions.
 
 Scope boundaries determine what the agent may touch. An agent constrained to a directory tree cannot corrupt files outside it, whatever it believes the task requires. In abracapocus_2, that boundary is enforced before every backend execution:
 
-def \_check_workdir_safe(self) -\> None:
+```python
+def _check_workdir_safe(self) -> None:
+    resolved_workdir = self.workdir.resolve()
+    resolved_working_root = self.working_root.resolve()
 
-resolved_workdir = self.workdir.resolve()
-
-resolved_working_root = self.working_root.resolve()
-
-if resolved_workdir != resolved_working_root and resolved_working_root not in resolved_workdir.parents:
-
-raise SecurityError(
-
-f"Unsafe workdir: {resolved_workdir} is outside {resolved_working_root}"
-
-)
+    if resolved_workdir != resolved_working_root and resolved_working_root not in resolved_workdir.parents:
+        raise SecurityError(
+            f"Unsafe workdir: {resolved_workdir} is outside {resolved_working_root}"
+        )
+```
 
 The agent cannot reason its way past this check. The boundary is not advice; it is a SecurityError that halts the operation before any subprocess runs.
 
 Branch protections determine where the agent may commit. A system that creates a fresh branch for every run, and refuses to operate on main or master without an explicit override, prevents bad changes from landing directly on the protected branch:
 
+```python
 allow_main = os.getenv("ABRACAPOCUS_ALLOW_MAIN", "false").lower() in {"1", "true", "yes", "on"}
 
 if not manager.safe_to_run() and not allow_main:
+    raise RuntimeError(
+        f"Refusing to run on protected branch '{branch}'. "
+        "Set ABRACAPOCUS_ALLOW_MAIN=true to override."
+    )
 
-raise RuntimeError(
-
-f"Refusing to run on protected branch '{branch}'. "
-
-"Set ABRACAPOCUS_ALLOW_MAIN=true to override."
-
-)
-
-branch_name = f"abracapocus/{task_id}-{date}-{run_id\[:8\]}"
-
+branch_name = f"abracapocus/{task_id}-{date}-{run_id[:8]}"
 manager.create_branch(branch_name)
+```
 
 The branch-per-run pattern isolates every autonomous operation by default. The operator can inspect the result, merge it, or abandon it. The worst case is a branch that gets deleted, not a polluted main branch that requires archaeology.
 

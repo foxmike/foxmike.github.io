@@ -91,33 +91,22 @@ In abracapocus_2, the enhancement plan was executed this way. A system that buil
 
 A representative task contract looks like this:
 
+```json
 {
-
-"task_id": "3.2",
-
-"title": "Rewrite PlanningAgent.create_plan() with complexity awareness",
-
-"description": "Import and call ComplexityClassifier before generating phases...",
-
-"phase": "phase_3",
-
-"acceptance_criteria": \[
-
-"Single-criterion task produces single-phase plan",
-
-"Five-criterion task produces five or more tasks across phases",
-
-"Each task has selected_backend set",
-
-"Plans persist correctly to plans/ directory"
-
-\],
-
-"selected_backend": "codex_cli",
-
-"verification_profile": "strict"
-
+  "task_id": "3.2",
+  "title": "Rewrite PlanningAgent.create_plan() with complexity awareness",
+  "description": "Import and call ComplexityClassifier before generating phases...",
+  "phase": "phase_3",
+  "acceptance_criteria": [
+    "Single-criterion task produces single-phase plan",
+    "Five-criterion task produces five or more tasks across phases",
+    "Each task has selected_backend set",
+    "Plans persist correctly to plans/ directory"
+  ],
+  "selected_backend": "codex_cli",
+  "verification_profile": "strict"
 }
+```
 
 Every field does work. The task_id anchors the task in the plan. The acceptance criteria define what the verification gate will check. The selected backend is a routing decision, not a default. The verification profile determines how strictly the result will be judged.
 
@@ -127,19 +116,15 @@ That sentence contains intent, but not a contract. It does not specify what a co
 
 The contract also enables pre-execution validation. Before any backend runs, the system can check whether the contract is sound:
 
+```python
 if not task.acceptance_criteria:
-
-return ContractValidationResult(
-
-status="failed",
-
-reason_codes=\["missing_acceptance_criteria"\],
-
-detail="Acceptance criteria must be non-empty.",
-
-blocking=True,
-
-)
+    return ContractValidationResult(
+        status="failed",
+        reason_codes=["missing_acceptance_criteria"],
+        detail="Acceptance criteria must be non-empty.",
+        blocking=True,
+    )
+```
 
 A task with empty acceptance criteria is blocked before it reaches a backend. A task with tautological criteria — “task is complete,” “works,” “done” — is flagged. A task whose criteria reference file paths not mentioned in the description is flagged for surface contradiction.
 

@@ -59,15 +59,13 @@ The third tier is checkpoint and block. The system stops autonomous execution, r
 
 In abracapocus_2, retry tiers are represented as an explicit finite budget:
 
-def \_retry_tiers(self) -\> List\[int\]:
-
-tier_1 = int(getattr(retry_config, "max_retries_tier_1", 2))
-
-tier_2 = int(getattr(retry_config, "max_retries_tier_2", 1))
-
-tier_3 = int(getattr(retry_config, "max_retries_tier_3", 1))
-
-return \[1\] \* tier_1 + \[2\] \* tier_2 + \[3\] \* tier_3
+```python
+def _retry_tiers(self) -> List[int]:
+    tier_1 = int(getattr(retry_config, "max_retries_tier_1", 2))
+    tier_2 = int(getattr(retry_config, "max_retries_tier_2", 1))
+    tier_3 = int(getattr(retry_config, "max_retries_tier_3", 1))
+    return [1] * tier_1 + [2] * tier_2 + [3] * tier_3
+```
 
 Two same-model retries. One stronger-model escalation. One final attempt before blocking.
 
@@ -85,53 +83,32 @@ A system that blocks a task and writes a structured report is making a rational 
 
 The blocked-task report preserves full diagnostic context:
 
+```json
 {
-
-"task_id": "phase5-retry-loop",
-
-"run_id": "a1b2c3d4",
-
-"reason": "convergence_wandering",
-
-"attempts": \[
-
-{
-
-"attempt_number": 2,
-
-"tier": 1,
-
-"failure_type": "test",
-
-"failure_detail": "test_retry_escalation: AssertionError",
-
-"convergence_assessment": {"status": "converging"}
-
-},
-
-{
-
-"attempt_number": 3,
-
-"tier": 2,
-
-"failure_type": "logic",
-
-"failure_detail": "Repeated unclassified failure across retry attempts",
-
-"convergence_assessment": {
-
-"status": "wandering",
-
-"reasons": \["divergent_regions"\]
-
+  "task_id": "phase5-retry-loop",
+  "run_id": "a1b2c3d4",
+  "reason": "convergence_wandering",
+  "attempts": [
+    {
+      "attempt_number": 2,
+      "tier": 1,
+      "failure_type": "test",
+      "failure_detail": "test_retry_escalation: AssertionError",
+      "convergence_assessment": {"status": "converging"}
+    },
+    {
+      "attempt_number": 3,
+      "tier": 2,
+      "failure_type": "logic",
+      "failure_detail": "Repeated unclassified failure across retry attempts",
+      "convergence_assessment": {
+        "status": "wandering",
+        "reasons": ["divergent_regions"]
+      }
+    }
+  ]
 }
-
-}
-
-\]
-
-}
+```
 
 The operator who receives this report does not need to reconstruct the failure from scratch. The system has preserved what was tried, what failed, how the failure was classified, and why it stopped.
 
@@ -153,15 +130,14 @@ The verifier failure pattern changes across attempts: the agent is not fixing th
 
 Any of these signals can trigger early termination:
 
+```python
 convergence = self.convergence_detector.assess(attempts)
 
 if convergence.status == "wandering":
-
-task.status = "blocked"
-
-self.\_persist_blocked_report(reason="convergence_wandering")
-
-return
+    task.status = "blocked"
+    self._persist_blocked_report(reason="convergence_wandering")
+    return
+```
 
 The distinction between convergence_wandering and retry_budget_exhausted matters. Budget exhaustion means the system tried and ran out of room. Wandering means continued effort was unlikely to help, regardless of budget.
 
