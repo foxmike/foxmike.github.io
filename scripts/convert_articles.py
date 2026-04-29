@@ -106,8 +106,8 @@ def main() -> None:
         fail("Pandoc is required to convert article docx files. Install pandoc and rerun this script.")
 
     docx_files = sorted(SOURCE_DIR.glob("*.docx"), key=order_from_filename)
-    if len(docx_files) != 5:
-        fail(f"expected 5 .docx files in {SOURCE_DIR}, found {len(docx_files)}")
+    if not docx_files:
+        fail(f"expected .docx files in {SOURCE_DIR}, found none")
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
