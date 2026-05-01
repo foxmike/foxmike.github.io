@@ -16,6 +16,21 @@ const capabilities = [
   },
 ];
 
+const aiArchitectureCards = [
+  {
+    title: 'Architecture before acceleration',
+    text: 'AI can speed implementation, but the system still needs clear boundaries, data contracts, service responsibilities, and a design that can survive production change.',
+  },
+  {
+    title: 'Verification over confidence',
+    text: 'Generated output is treated as provisional until tests, reviews, data checks, and acceptance gates prove that it behaves correctly in the real system.',
+  },
+  {
+    title: 'Production systems, not demos',
+    text: 'Fast prototypes are useful, but durable software needs scalability, observability, maintainability, operational fit, and disciplined delivery judgment.',
+  },
+];
+
 const focusAreas = [
   'Forecasting and analytics platforms',
   'Autonomous development orchestration systems',
@@ -35,14 +50,32 @@ const focusAreas = [
 >
         <section class="hero">
           <p class="eyebrow">Senior Architect · Data Platforms · AI-Enabled Systems</p>
-          <h1>Production software architecture for data-intensive and AI-era systems.</h1>
+          <h1>AI-accelerated delivery with production-grade architecture.</h1>
           <p class="lead">
-            I design and deliver systems where architecture, data, modeling, APIs, automation, and operational decision-making have to work together in production — not just in demos.
+            I use AI to increase development speed while preserving architectural control, data correctness, maintainable boundaries, verification, scalability, and production readiness.
           </p>
           <div class="actions">
             <a class="button primary" href="/capabilities/">View capabilities</a>
             <a class="button" href="/work/">Current work</a>
             <a class="button" href="mailto:foxmike@gmail.com">Contact</a>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-header">
+            <h2>AI speed without architectural debt.</h2>
+            <p>
+              AI can produce code and demos quickly. Production systems still require architecture, verification, maintainable boundaries, data correctness, and operational discipline so faster delivery does not become slower recovery.
+            </p>
+          </div>
+
+          <div class="grid three">
+            {aiArchitectureCards.map((item) => (
+              <article class="card">
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </article>
+            ))}
           </div>
         </section>
 
